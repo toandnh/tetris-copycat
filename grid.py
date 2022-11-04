@@ -165,8 +165,6 @@ class Tetris(arcade.Section):
 
     def on_update(self, delta_time):
         self.frames += 1
-        #print(delta_time)
-        #print(self.vertical_move_speed)
 
         if self.frames % self.vertical_move_speed == 0:
             self.drop()
@@ -174,9 +172,12 @@ class Tetris(arcade.Section):
         if self.down_key_down:
             if self.frames % self.drop_speed == 0:
                 self.drop()
-        elif self.left_key_down or self.right_key_down:
+        elif self.left_key_down and not self.right_key_down:
             if self.frames % self.horizontal_move_speed == 0:
-                self.move_tetromino(-1 if self.left_key_down else 1)
+                self.move_tetromino(-1)
+        elif self.right_key_down and not self.left_key_down:
+            if self.frames % self.horizontal_move_speed == 0:
+                self.move_tetromino(1)
 
     def draw_grid(self):
         self.grid_sprites.draw()
